@@ -1,0 +1,13 @@
+# Setup mod_rewrite
+RewriteEngine on
+RewriteBase /
+
+# Load cache
+RewriteCond %{QUERY_STRING} !.*=.*
+RewriteCond %{REQUEST_METHOD} !=POST
+RewriteCond cache/%{HTTP_HOST}%{REQUEST_URI} -F
+RewriteRule .* cache/%{HTTP_HOST}%{REQUEST_URI} [L]
+
+# Proxy server
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* proxy.php [L]
